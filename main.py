@@ -1,9 +1,18 @@
-from drafter import (
-    start_server, route, hide_debug_information, add_website_css,
-    Page, Div, Button, Argument, PageContent, Image, Download, Row
-)
+from drafter import *
 from dataclasses import dataclass
 from typing import List
+
+set_site_information(
+    author="wrenrust@udel.edu",
+    description="""This website includes an interactive online tracker for 
+    which state parks you've visited.""",
+    sources=[],
+    planning=["plan.pdf"],
+    links=["https://ud-f25-cs1.github.io/honors-hackathon-2025-rust/"]
+)
+#hide_debug_information()
+set_website_title("Delaware State Parks Passport")
+set_website_framed(False)
 
 # --- Website settings ---
 hide_debug_information()
@@ -32,7 +41,7 @@ add_website_css(".navbar button", """
     
 
     border: 1px solid #ccc;
-    background: #fff;
+    background: #ffffff;
     padding: 0.6rem 1.2rem;
     border-radius: 6px;
     font-size: 14px;
@@ -44,7 +53,7 @@ add_website_css(".navbar", """
     align-items: center;
     justify-content: flex-end;
     text-align: center;
-    color: #0b2540;
+    color: #131c3e;
     width: 100%;
     height: 60px;
 
@@ -54,7 +63,7 @@ add_website_css(".navbar", """
     display: flex; 
     justify-content: 
     flex-end; /* Align controls to the right */ 
-    padding: 1rem 3rem; background: #0b2540;
+    padding: 1rem 3rem; background: #131c3e;
     border-bottom: 1px solid #eee; 
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); """)
 
@@ -127,7 +136,7 @@ add_website_css(".park-button-indicator", """
     top: -8px;
     right: -8px;
     border-radius: 6px; 
-    border: 2px solid #0b2540;
+    border: 4px solid #131c3e;
     background: white;
     cursor: pointer;
     padding: 0;
@@ -144,7 +153,6 @@ add_website_css(".park-button-indicator", """
 
 add_website_css(".park-button-indicator.checked", "background: #0b2540;")
 
-# Controls (Used inside the Navbar)
 add_website_css(".controls", "display: flex; gap: 0.8rem; " \
     "text-align: center;"
     "display: flex;"
@@ -171,17 +179,36 @@ add_website_css(".park-info-status", """
 add_website_css(".tile-link-overlay", """
     all: unset;
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 18px;
+    pointer-events: auto;
+    z-index: 2;
 """)
 add_website_css(".tile-overlay", """
     all: unset;
     position: absolute;
-    inset: 0;
-    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
     border-radius: 18px;
+    pointer-events: auto;
+    z-index: 2;
 """)
 
 
@@ -348,5 +375,4 @@ initial_parks = [
 initial_visited = [False for _ in initial_parks]
 
 if __name__ == '__main__':
-    start_server(State(initial_parks, initial_visited),
-                 port="8043")
+    start_server(State(initial_parks, initial_visited), port="8054")
