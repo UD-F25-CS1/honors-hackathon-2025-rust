@@ -21,6 +21,12 @@ hide_debug_information()
 # (Your environment will serve /mnt/data/webpassport.png as an asset.)
 PASSPORT_IMAGE_PATH = "images/passport-image.png"
 
+add_website_css("body", """
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background: #f7fffc;
+""")
 
 # --- Consolidated CSS for layout and look ---
 
@@ -62,9 +68,9 @@ add_website_css(".navbar", """
 add_website_css(".navbar", """ 
     display: flex; 
     justify-content: 
+    width: 100%;
     flex-end; /* Align controls to the right */ 
     padding: 1rem 3rem; background: #131c3e;
-    border-bottom: 1px solid #eee; 
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); """)
 
 add_website_css(".navbar .controls", "margin-bottom: 0;")
@@ -84,47 +90,45 @@ add_website_css(".passport-cover", """
 
 # ---------- Grid Container (Responsive for Squares) ----------
 add_website_css(".parks-grid", """
-    display: grid;
-    /* Use 1fr to make the columns flexible */
-    grid-template-columns: repeat(4, 1fr);
-    height: 560px; /* Fixed height to match passport */
-    gap: 7px;
-    /* The height will now be determined by content + padding trick */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;           /* space between tiles */
+    max-width: 500px;    /* optional: controls line breaks */
 """)
+
 
 # ---------- Park Tiles (The Square Trick) ----------
 add_website_css(".park-tile-wrapper", """
     position: relative;
-    width: 100%;
-    /* 1:1 Aspect Ratio Trick: Set height to 0 and use padding-bottom to match width */
-    height: 0;
-    padding-bottom: 100%; 
+    width: 100px;
+    height: 100px;
+    flex: 0 0 100px;   /* prevents flex from resizing it */
 """)
 
+
 add_website_css(".park-tile", """
-    /* Tile content must be absolute to fit inside the wrapper */
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 75%;
-    height: 75%;
+    inset: 0;             /* shorthand for top/left/right/bottom: 0 */
     
-    background: #9bbcaf;
-    padding: 10px; /* Reduced padding to center content better */
+    background: #87af9c;
+    text-color: #0f1a3a;
+    padding: 12px;
     border-radius: 18px;
-    margin: 5px;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.08);
+
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
 """)
+
 
 add_website_css(".park-name", """
     font-weight: 700;
     font-size: 13px; /* Smaller font for small squares */
     line-height: 1.2;
-    color: #0b2540;
+    color: #0f1a3a;
     text-align: center;
     padding: 10px; /* Internal padding to prevent text touching edges */
 """)
@@ -375,4 +379,4 @@ initial_parks = [
 initial_visited = [False for _ in initial_parks]
 
 if __name__ == '__main__':
-    start_server(State(initial_parks, initial_visited), port="8054")
+    start_server(State(initial_parks, initial_visited), port="8067")
